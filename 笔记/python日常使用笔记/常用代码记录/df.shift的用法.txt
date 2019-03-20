@@ -1,0 +1,14 @@
+df.shift(2)   按行水平移动正数向下移，负数向上移
+df.shift(2,axis=1) 按列移动正数向右移，负数向左移
+
+对于index为时间：
+df = pd.DataFrame(np.arange(16).reshape(4,4),columns=['AA','BB','CC','DD'],index =pd.date_range('6/1/2012','6/4/2012'))
+
+
+
+df.shift(freq=datetime.timedelta(1))
+向后移一天
+
+df.shift(freq=datetime.timedelta(-2))
+向前移两天
+移动时间索引，而数据值没有发生变化。

@@ -1,0 +1,1 @@
+d = dict(zip(list_1, list_2)) 两个列表封装成字典

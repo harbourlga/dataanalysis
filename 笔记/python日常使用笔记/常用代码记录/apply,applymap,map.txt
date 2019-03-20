@@ -1,0 +1,75 @@
+ly,applymap和map的应用
+总结:
+
+apply 用在dataframe上，用于对row或者column进行计算；
+
+applymap 用于dataframe上，是元素级别的操作；
+
+map （其实是python自带的）用于series上，是元素级别的操作。
+
+如：
+复制代码
+>>> df = pd.DataFrame(np.random.randint(0,10,(4, 3)), columns=list('bde'), index=range(4))
+>>> df
+   b  d  e
+0  2  0  5
+1  8  9  1
+2  3  6  6
+3  4  8  4
+复制代码
+apply：作用在dataframe的一行或一列上
+
+复制代码
+>>> f = lambda x: x.max() - x.min()
+>>> df.apply(f)
+b    6
+d    9
+e    5
+dtype: int64 
+>>> df.apply(f,axis=1)  # 作用在一行上
+0    5
+1    8
+2    3
+3    4
+dtype: int64
+>>> df.apply(f,axis=0)  # 作用在一列上，axis=0可省略
+b    6
+d    9
+e    5
+dtype: int64
+复制代码
+applymap： 作用在dataframe的每一个元素上
+
+复制代码
+>>> f2 = lambda x: x+1 if x%2==0 else x
+>>> df.applymap(f2)
+   b  d  e
+0  3  1  5
+1  9  9  1
+2  3  7  7
+3  5  9  5
+复制代码
+ 关于apply传入多个参数：
+
+复制代码
+>>> data = {'id':range(5),'value':list("abcab")}
+>>> frame = pd.DataFrame(data)
+>>> frame
+   id value
+0   0     a
+1   1     b
+2   2     c
+3   3     a
+4   4     b
+
+>>> def testf(x, str):
+...     return x,str
+
+>>> frame["id"].apply(testf, args=("ok",))
+0    (0, ok)
+1    (1, ok)
+2    (2, ok)
+3    (3, ok)
+4    (4, ok)
+Name: id, dtype: object
+# 注意这里args只能传入(元组),不能是"ok"或("ok")
